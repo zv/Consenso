@@ -1,10 +1,12 @@
 //===-- ConsensIS 
 //===-- ConsensISTargetMachine.h - Define TargetMachine for ConsensIS ---*- C++ -*-===//
 //
-//                     The LLVM Compiler Infrastructure
+// This file is distributed under the MIT License.
 //
-// This file is distributed under the University of Illinois Open Source
-// License. See LICENSE.TXT for details.
+// Zephyr Pellerin (zv)
+// Jessy Exum      (diamondman)
+//
+// Pretty much no rights reserved (2012)
 //
 //===----------------------------------------------------------------------===//
 //
