@@ -32,10 +32,10 @@
 // Manipulation
 #define LOADB  0x10
 #define STOREB 0x11
-
 // Arithmetic
 #define CMP     0x20
 #define ADD     0x3
+#define MUL     0xA
 
 // Logic
 #define AND     0x4
@@ -54,6 +54,9 @@
 #define CALL    0x70
 #define SAVE    0x8
 #define RESTORE 0x9
+
+// Emulator Call
+#define CALL_GATE 0xE
 
 // Quit the emulator
 void quit(const char *why,int value1=0,int value2=0) 
@@ -107,40 +110,36 @@ int CPU::run(void) {
     // This routine decodes the instruction
 		switch (opcode) { 
 
-      // Jump to Address
-    case 0xF: registers[0xf] = registers[j]; break;
-   
-    // hack
-    case 0x9: registers[0xf] = 0x0; break;
+    /*  
+     Data Manipulation
+    */
+ 
+    // loadb
+    // Load Byte (Signed) from Address
+    case LOADB: registers[i] = mem[registers[j]]; break;
 
-              // Load Effective Address
-		case 0x1: registers[i]=(inst&0xff); break; 
-
-
-    //
-    // Arithmetic 
-    //
-    
-    // Comparison
+    // storeb
+    // Store Byte (Signed) from Address
+    case STOREB: mem[registers[i]] = registers[j]; break;
 
     // multiplication  
-    case 0x2: registers[i]=registers[j]*registers[k]; break;
+    case MUL: registers[i]=registers[j]*registers[k]; break;
 
     // Addition 
-		case 0xA: registers[i]=registers[j]+registers[k]; break; 
+		case ADD: registers[i]=registers[j]+registers[k]; break; 
 
 
     // Increment Register i if J == K
-		case 0xB: if (registers[j]==registers[k]) registers[i]++; break; 
+		case BE: if (registers[j]==registers[k]) registers[i]++; break; 
 
     // Increment Register i if J >=  K
-		case 0xC: if (registers[j]>=registers[k]) registers[i]++; break; 
+		case BG: if (registers[j]>=registers[k]) registers[i]++; break; 
 
     // Increment Register i if J > K
-		case 0xD: if (registers[j]>registers[k]) registers[i]++; break; 
+		case BL: if (registers[j]>registers[k]) registers[i]++; break; 
     
     // Emulator Call
-		case 0xE:
+		case CALL_GATE:
 			switch (i) {
       // Print the value of k (in decimal) & j
 			case 0x0: printf("%d%c",registers[k]," \n\t,"[j]); break;
