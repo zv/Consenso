@@ -136,10 +136,19 @@ int CPU::run(void) {
                 registers[COMPARISON_REGISTER] = 1; 
               else if (registers[j] < registers[k])
                 registers[COMPARISON_REGISTER] = -1; 
+              break; 
 
-
+    // mul
+    // Multiply Two Numbers
     case MUL: registers[i]=registers[j]*registers[k]; break;
+
+    // add
+    // Add Two Numbers
 		case ADD: registers[i]=registers[j]+registers[k]; break; 
+
+
+
+
 
     // Emulator Call
 		case CALL_GATE:
