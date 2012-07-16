@@ -1,5 +1,3 @@
-// This is an emulator based off the MIT 0613 Operating Systems Design Course
-
 // ALL HAIL THE MIGHTY MACHINE CONSENSO
 #include <iostream>
 #include <stdio.h>
@@ -29,14 +27,41 @@
 // The lone and level sands stretch far away.
 
 
+#define BYTE_SIZE 8
+
+// Manipulation
+#define LOADB  0x10
+#define STOREB 0x11
+
+// Arithmetic
+#define CMP     0x20
+#define ADD     0x3
+
+// Logic
+#define AND     0x4
+#define ORN     0x5
+
+// Branches
+#define BA      0x61
+#define BNE     0x62
+#define BE      0x63
+#define BG      0x64
+#define BLE     0x65
+#define BGE     0x66
+#define BL      0x67
+
+// Stack Frame
+#define CALL    0x70
+#define SAVE    0x8
+#define RESTORE 0x9
+
 // Quit the emulator
 void quit(const char *why,int value1=0,int value2=0) 
 	{ fprintf(stderr, why, value1, value2); exit(0); }
 
 
 class CPU {
-  public:
-    enum {n_registers = 16};
+  public: enum {n_registers = 16};
     // 15 is reserved as an instruction pointer
     // 14 is reserved as a a status flag register
     // 13 -> 11 are saved program state registers so we can implement cooperative multitasking
@@ -88,14 +113,22 @@ int CPU::run(void) {
     // hack
     case 0x9: registers[0xf] = 0x0; break;
 
-    // Load Effective Address
+              // Load Effective Address
 		case 0x1: registers[i]=(inst&0xff); break; 
+
+
+    //
+    // Arithmetic 
+    //
+    
+    // Comparison
 
     // multiplication  
     case 0x2: registers[i]=registers[j]*registers[k]; break;
 
     // Addition 
 		case 0xA: registers[i]=registers[j]+registers[k]; break; 
+
 
     // Increment Register i if J == K
 		case 0xB: if (registers[j]==registers[k]) registers[i]++; break; 
