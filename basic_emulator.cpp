@@ -58,6 +58,9 @@
 // Emulator Call
 #define CALL_GATE 0xE
 
+// Comparison Register
+#define COMPARISON_REGISTER 0xF
+
 // Quit the emulator
 void quit(const char *why,int value1=0,int value2=0) 
 	{ fprintf(stderr, why, value1, value2); exit(0); }
@@ -110,8 +113,8 @@ int CPU::run(void) {
     // This routine decodes the instruction
 		switch (opcode) { 
 
-    /*  
-     Data Manipulation
+   /*  
+    * Data Manipulation
     */
  
     // loadb
@@ -122,22 +125,22 @@ int CPU::run(void) {
     // Store Byte (Signed) from Address
     case STOREB: mem[registers[i]] = registers[j]; break;
 
-    // multiplication  
-    case MUL: registers[i]=registers[j]*registers[k]; break;
+   /*
+    * Arithmetic  
+    */
+    // cmp
+    // Compare two registers and set a flag
+    case CMP: if (registers[j]==registers[k])
+                registers[COMPARISON_REGISTER] = 0; 
+              else if (registers[j] > registers[k])
+                registers[COMPARISON_REGISTER] = 1; 
+              else if (registers[j] < registers[k])
+                registers[COMPARISON_REGISTER] = -1; 
 
-    // Addition 
+
+    case MUL: registers[i]=registers[j]*registers[k]; break;
 		case ADD: registers[i]=registers[j]+registers[k]; break; 
 
-
-    // Increment Register i if J == K
-		case BE: if (registers[j]==registers[k]) registers[i]++; break; 
-
-    // Increment Register i if J >=  K
-		case BG: if (registers[j]>=registers[k]) registers[i]++; break; 
-
-    // Increment Register i if J > K
-		case BL: if (registers[j]>registers[k]) registers[i]++; break; 
-    
     // Emulator Call
 		case CALL_GATE:
 			switch (i) {
