@@ -39,8 +39,7 @@
 
 // Logic
 #define AND     0x4
-#define ORN     0x5
-
+#define ORN     0x5 
 // Branches
 #define BA      0x61
 #define BNE     0x62
@@ -59,7 +58,7 @@
 #define CALL_GATE 0xE
 
 // Comparison Register
-#define COMPARISON_REGISTER 0xF
+#define COMPARISON_REGISTER 0xE
 
 // Quit the emulator
 void quit(const char *why,int value1=0,int value2=0) 
@@ -128,6 +127,7 @@ int CPU::run(void) {
    /*
     * Arithmetic  
     */
+
     // cmp
     // Compare two registers and set a flag
     case CMP: if (registers[j]==registers[k])
@@ -145,10 +145,6 @@ int CPU::run(void) {
     // add
     // Add Two Numbers
 		case ADD: registers[i]=registers[j]+registers[k]; break; 
-
-
-
-
 
     // Emulator Call
 		case CALL_GATE:
