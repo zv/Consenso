@@ -57,8 +57,12 @@
 // Emulator Call
 #define CALL_GATE 0xE
 
+#define INSTRUCTION_POINTER registers[0xF]
 // Comparison Register
 #define COMPARISON_REGISTER 0xE
+
+ #define GLOBAL 0xFFF
+
 
 // Quit the emulator
 void quit(const char *why,int value1=0,int value2=0) 
@@ -141,12 +145,48 @@ int CPU::run(void) {
     // mul
     // Multiply Two Numbers
     case MUL: registers[i]=registers[j]*registers[k]; break;
-
+    
+    case GLOBAL: registers[i] = registers[j] && registers[k]; break; 
     // add
     // Add Two Numbers
 		case ADD: registers[i]=registers[j]+registers[k]; break; 
 
-    // Emulator Call
+    /*
+     * Flow Control
+     */
+
+    // ba
+    // Branch Always 
+    case BA: INSTRUCTION_POINTER = registers[i]; break;
+
+    // ble
+    // Branch if Less than or Equal to
+    case BLE: if (registers[j] <= registers[k]) INSTRUCTION_POINTER = registers[i]; break;
+
+    // bge
+    // Branch if Greater Than or Equal To
+    case BGE: if (registers[j] >= registers[k]) INSTRUCTION_POINTER = registers[i]; break;
+
+    // bne
+    // Branch if Not Equal
+    case BNE: if (registers[j] != registers[k]) INSTRUCTION_POINTER = registers[i]; break;
+
+    // be
+    // Branch if Equal to
+    case BE: if (registers[j] == registers[k]) INSTRUCTION_POINTER = registers[i]; break;
+
+    // bg
+    // Branch if Greater Than
+    case BG: if (registers[j] > registers[k]) INSTRUCTION_POINTER = registers[i]; break;
+               
+    // bl
+    // Branch if Less Than
+    case BL: if (registers[j] < registers[k]) INSTRUCTION_POINTER = registers[i]; break;
+
+
+
+
+   // Emulator Call
 		case CALL_GATE:
 			switch (i) {
       // Print the value of k (in decimal) & j
