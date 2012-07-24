@@ -32,14 +32,16 @@
 // Manipulation
 #define LOADB  0x10
 #define STOREB 0x11
+
 // Arithmetic
-#define CMP     0x20
-#define ADD     0x3
-#define MUL     0xA
+#define CMP     0x31
+#define ADD     0x32
+#define MUL     0x33
 
 // Logic
 #define AND     0x4
-#define ORN     0x5 
+#define ORN     0x5
+
 // Branches
 #define BA      0x61
 #define BNE     0x62
