@@ -88,12 +88,6 @@ class CPU {
     void dump(int id); /* Print out registers */
   };
 
-// Note from Zephyr
-// As I see it, This basic emulator implements a reasonable immediate
-// architecture for LEA, and is technically workable but to be perfectly
-// honest I have no fucking clue how to write anything but the most 
-// basic program with this istruction set
-
 // here's the total of what I would like to implement
 // Multiply (Through Discrete Fourier Transform)
 // Swap two registers
